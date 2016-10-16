@@ -7,6 +7,9 @@
     "npm":"2.15.9"
   },
   "scripts": {
-    "start": "node accueil1.js"
-  }
+    "start": "node accueil2.js"
+  },
+  "dependencies": {
+        "markdown": "~0.4"
+    }
 }
