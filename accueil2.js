@@ -31,4 +31,4 @@ var markdown = require('markdown').markdown;
 
 console.log(markdown.toHTML('Un paragraphe en **markdown** !'));
 var server=http.createServer(lancementFonction);
-server.listen(8080);
+server.listen(process.env.PORT);
