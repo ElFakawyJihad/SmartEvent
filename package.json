@@ -10,6 +10,9 @@
     "start": "node accueil2.js"
   },
   "dependencies": {
-        "markdown": "~0.4"
+        "markdown": "~0.4",
+	"express": "^4.10.6",
+	"mysql": "^2.5.4",
+	"config":"^1.21.0"
     }
 }
