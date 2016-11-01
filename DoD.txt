@@ -1,0 +1,8 @@
+Definition of done
+
+- Tâche finie
+- Tests écrits
+- Tâche mise en production (dans le cas d'une tâche serveur)
+- Tests lancées et ils passent
+- Couverture de code ?
+- Sonar ?

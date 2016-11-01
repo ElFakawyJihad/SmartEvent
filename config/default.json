@@ -2,9 +2,9 @@
 
  	"database": {
      	"host": "localhost",
-    	"user": "<username>",
-		"password": "<password>",
-		"database": "<database>"		
+    	"user": "root",
+	"password": "06072012",
+	"database": "smartevents"		
     }
   	
 }
