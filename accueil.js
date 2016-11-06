@@ -9,9 +9,6 @@ var databaseConfig = config.get("database");
 
 var mysql = require("mysql");
 
-
-
-
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 

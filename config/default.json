@@ -1,10 +1,16 @@
 {
 
- 	"database": {
+	"no-database": {
      	"host": "localhost",
     	"user": "root",
-	"password": "06072012",
-	"database": "smartevents"		
+		"password": "06072012"
+
+    },
+	"database": {
+     	"host": "localhost",
+    	"user": "root",
+		"password": "06072012",
+		"database": "smartevents"
     }
   	
 }
