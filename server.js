@@ -2,7 +2,6 @@ var express = require('express');
 var app = express();
 var fs = require("fs");
 var bodyParser = require('body-parser');
-
 var config = require("config");
 
 var pg = require("pg");
@@ -25,13 +24,7 @@ app.post('/connection', function (req, res) {
 	res.end(connect(email, password));
 });
 
-var server = app.listen(8080, function () {
-   	var host = server.address().address;
-   	var port = server.address().port;
-
-   console.log("Server running at http://%s:%s", host, port)
-});
-
+var server = app.listen(process.env.PORT);
 
 function connect(email, password) {
 	var results = [];
