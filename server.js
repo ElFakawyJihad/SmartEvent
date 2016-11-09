@@ -39,7 +39,7 @@ function connect(email, password) {
 
 	query.on('end', function(){
 		if(results.length){
-			return JSON.stringify({message : "OK", data : rows[0]});
+			return JSON.stringify({message : "OK", data : results[0]});
 		}
 		return stringify({message: "KO"});
 	});
