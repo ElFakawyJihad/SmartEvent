@@ -21,7 +21,8 @@ app.post('/connection', function (req, res) {
 	var email = req.body.email;
 	var password = req.body.password;
 
-	res.end(connect(email, password));
+	res.write(connect(email, password));
+	res.end();
 });
 
 var server = app.listen(process.env.PORT);
