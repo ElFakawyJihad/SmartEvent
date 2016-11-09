@@ -42,7 +42,7 @@ function connect(email, password) {
 		if(results.length){
 			return JSON.stringify({message : "OK", data : results[0]});
 		}
-		return stringify({message: "KO"});
+		return JSON.stringify({message: "KO"});
 	});
 };
 
