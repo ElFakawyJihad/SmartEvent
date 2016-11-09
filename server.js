@@ -38,7 +38,7 @@ function connect(email, password) {
 	});
 
 	query.on('end', function(){
-		if(rows.length){
+		if(results.length){
 			return JSON.stringify({message : "OK", data : rows[0]});
 		}
 		return stringify({message: "KO"});
