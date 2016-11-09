@@ -31,7 +31,7 @@ function connect(email, password) {
 
 	var client = new pg.Client(connectionString);
 	client.connect();
-	var query = client.query("SELECT * FROM user where email = '" + email + "' AND password = '" + password + "'");
+	var query = client.query("SELECT * FROM userApp where email = '" + email + "' AND password = '" + password + "'");
 
 	query.on('row', function(row){
 		results.push(row);	
