@@ -1,14 +1,16 @@
-var config = require("config");
-var mysql = require("mysql");
-var connection = mysql.createConnection(config.get("no-database"));
+var pg = require("pg");
+var connectionString = "postgres://YourUserName:YourPassword@localhost:5432";
 
-connection.connect();
+
+var client = new pg.Client(connectionString);
+client.connect();
+
 create_database();
-connection.end();
+client.end();
 
 function create_database(){
-	connection.query("DROP DATABASE IF EXISTS smartevents");
-	connection.query("CREATE DATABASE IF NOT EXISTS smartevents", function(err, rows, fields){ });
+	client.query("DROP DATABASE IF EXISTS smartevents");
+	client.query("CREATE DATABASE IF NOT EXISTS smartevents");
 }
 
 

@@ -9,6 +9,8 @@ var databaseConfig = config.get("database");
 
 var mysql = require("mysql");
 
+var connection = require("connection");
+
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
@@ -17,27 +19,22 @@ app.get('/', function(req, res){
 });
 
 app.post('/connection', function (req, res) {
-  console.log("Email : " + req.body.email)
-	console.log("Password : " + req.body.password)
 
-	var email = req.body.email;
-	var password = req.body.password;
-
-	var connection = mysql.createConnection(databaseConfig);
-	connection.connect();
-	connection.query("SELECT * FROM user where email = '" + email + "' AND password = '" + password + "'", function(err, rows, fields){
-		if (rows.length) {
-	    res.end(JSON.stringify(rows[0]));
-		} else {
-			return "NO RESULT FOUND";		
-		}
-	});
+	res.end(doConnection(email, password));
 });
 
-var server = app.listen(8081, function () {
-   var host = server.address().address;
-   var port = server.address().port;
+var server = app.listen(8080, function () {
+   	var host = server.address().address;
+   	var port = server.address().port;
 
    console.log("Server running at http://%s:%s", host, port)
 });
+
+function performConnection(email, password){
+	connection.connect(email, password);
+
+	
+
+
+}
 
