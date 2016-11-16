@@ -21,6 +21,8 @@ app.post('/connection', function (req, res) {
 	var email = req.body.email;
 	var password = req.body.password;
 
+	var results[];
+
 	var client = new pg.Client(connectionString);
 	client.connect();
 	var query = client.query("SELECT * FROM userApp where email = '" + email + "' AND password = '" + password + "'");
