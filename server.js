@@ -21,7 +21,8 @@ app.post('/connection', function (req, res) {
 	var email = req.body.email;
 	var password = req.body.password;
 
-	res.end(connect(email, password));
+	res.write(connect(email, password));
+	res.end();
 });
 
 var server = app.listen(process.env.PORT);
@@ -31,19 +32,22 @@ function connect(email, password) {
 
 	var client = new pg.Client(connectionString);
 	client.connect();
-	var query = client.query("SELECT * FROM user where email = '" + email + "' AND password = '" + password + "'");
+	var query = client.query("SELECT * FROM userApp where email = '" + email + "' AND password = '" + password + "'");
 
 	query.on('row', function(row){
 		results.push(row);	
 	});
 
 	query.on('end', function(){
-		done();
-		if(rows.length){
-			return JSON.stringify({message : "OK", data : rows[0]});
+		if(results.length){
+			var string = JSON.stringify({message : "OK", data : results[0]});
+			console.log(string
+			return string;
 		}
-		return stringify({message: "KO"});
+		return JSON.stringify({message: "KO"});
 	});
+
+	return "tata";
 };
 
 

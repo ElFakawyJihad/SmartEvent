@@ -20,15 +20,10 @@ app.get('/', function(req, res){
 
 app.post('/connection', function (req, res) {
 
-	res.end(perform(email, password));
+	res.end(performConnection(email, password));
 });
 
-var server = app.listen(8080, function () {
-   	var host = server.address().address;
-   	var port = server.address().port;
-
-   console.log("Server running at http://%s:%s", host, port)
-});
+var server = app.listen(8080);
 
 function performConnection(email, password){
 	connection.connect(email, password);
