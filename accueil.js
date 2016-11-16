@@ -20,7 +20,7 @@ app.get('/', function(req, res){
 
 app.post('/connection', function (req, res) {
 
-	res.end(doConnection(email, password));
+	res.end(perform(email, password));
 });
 
 var server = app.listen(8080, function () {
