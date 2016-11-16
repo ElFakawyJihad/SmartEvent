@@ -43,31 +43,53 @@ app.post('/connection', function (req, res) {
 	
 });
 
-var server = app.listen(process.env.PORT);
 
-function connect(email, password) {
+app.post('/inscription', function (req, res) {
+
+	var email = req.body.email;
+	var password = req.body.password;
+
 	var results = [];
 
 	var client = new pg.Client(connectionString);
 	client.connect();
-	var query = client.query("SELECT * FROM userApp where email = '" + email + "' AND password = '" + password + "'");
-
-	query.on('row', function(row){
-		results.push(row);	
+	var query = client.query("INSERT INTO user (email, password) VALUES ('" + email + "', '" + password + "')", function(err, result) {
+        	if (err) {
+                    	res.write(JSON.stringify({message: "KO"}));
+                } else {
+			res.write(JSON.stringify({message: "OK"}));
+                }
+		res.end();
 	});
+	
+});
 
-	var results;
+app.post('/fill_informations', function (req, res) {
 
-	query.on('end', function(){
-		if(results.length){
-			result = JSON.stringify({message : "OK", data : results[0]});
+	var email = req.body.email;
+	var prenom = req.body.prenom;
+	var nom = req.body.nom;
+	var naissance = req.body.naissance;
+	var genre = req.body.genre; 
+
+	var results = [];
+
+	var client = new pg.Client(connectionString);
+	client.connect();
+	var query = client.query("UPDATE user SET prenom = '" + prenom + "', nom = '" + nom + "', naissance = '" + naissance + "', genre = '" + genre + "' WHERE email", function(err, result){
+		if(err){
+			res.write(JSON.stringify({message : "OK"}));
 		} else {
-			result = JSON.stringify({message: "KO"});
+			res.write(JSON.stringify({message: "KO"}));
 		}	
+		res.end();	
 	});
 
-	return results;
-};
+	
+});
+
+var server = app.listen(process.env.PORT);
+
 
 
 
