@@ -38,7 +38,7 @@ function connect(email, password) {
 		results.push(row);	
 	});
 
-	query.on('end', function(){
+	var result = query.on('end', function(){
 		if(results.length){
 			var string = JSON.stringify({message : "OK", data : results[0]});
 			console.log(string);
@@ -47,7 +47,7 @@ function connect(email, password) {
 		return JSON.stringify({message: "KO"});
 	});
 
-	return "tata";
+	return result;
 };
 
 
