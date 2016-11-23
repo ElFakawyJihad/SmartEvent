@@ -76,9 +76,9 @@ app.post('/fill_informations', function (req, res) {
 
 	var client = new pg.Client(connectionString);
 	client.connect();
-	var query = client.query("UPDATE user SET prenom = '" + prenom + "', nom = '" + nom + "', naissance = '" + naissance + "', genre = '" + genre + "' WHERE email", function(err, result){
+	var query = client.query("UPDATE user SET prenom = '" + prenom + "', nom = '" + nom + "', naissance = '" + naissance + "', genre = '" + genre + "' WHERE email = '" + email + "'", function(err, result){
 		if(err){
-			res.write(JSON.stringify({message : "OK"}));
+			res.write(JSON.stringify({message: "OK"}));
 		} else {
 			res.write(JSON.stringify({message: "KO"}));
 		}	
