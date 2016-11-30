@@ -28,6 +28,8 @@ function create_data(){
 
 	client.query("INSERT INTO user VALUES('dureyantonin@gmail.com', 'Antonin', 'Durey', '', '1995-01-17', 'azerty01', '0', '0')");
 
+	client.query("INSERT INTO user VALUES('test', 'test', 'test', '', '', 'test', '0', '0')");
+
 }
 
 function create_tables(){
