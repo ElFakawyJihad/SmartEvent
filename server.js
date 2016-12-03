@@ -129,15 +129,6 @@ app.post('/create_event', function (req, res) {
 	
 });
 
-app.get('/reinit_server', function (req, res) {
-	var client = new pg.Client(connectionString);
-	client.connect();
-
-	create_tables();
-	create_data();
-});
-
-
 
 function create_data(){
 
@@ -269,6 +260,18 @@ function create_tables(){
 		}  	
 	});
 }
+
+
+
+app.get('/reinit_server', function (req, res) {
+	var client = new pg.Client(connectionString);
+	client.connect();
+
+	create_tables();
+	create_data();
+});
+
+
 
 
 
