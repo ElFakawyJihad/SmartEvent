@@ -88,6 +88,46 @@ app.post('/fill_informations', function (req, res) {
 	
 });
 
+app.post('/create_event', function (req, res) {
+
+	var titre = req.body.eventTitle;
+	var category = req.body.eventCategory;
+	var description = req.body.eventDescription;
+	var date = req.body.eventDate;
+	var capacity = req.body.eventCapacity; 
+	var localisation = req.body.eventLocalisation;
+	var latitude = req.body.localisationLat; 
+	var longitude = req.body.localisationLong;
+
+	var results = [];
+
+	var client = new pg.Client(connectionString);
+	client.connect();
+
+	var query = client.query("INSERT into lieu(name, longitude, latitude) VALUES('" + localisation + "', '" + longitude + "', '" + latitude + "')'", function(err, result){
+		if(err){
+			res.write(JSON.stringify({message: "OK"}));
+		} else {
+			console.log("result : " + result);
+		}	
+		res.end();	
+	});
+
+/*
+	var query = client.query("INSERT into event(titre, description, date_debut, nb_places, ) VALUES('" + prenom + "', nom = '" + nom + "', naissance = '" + naissance + "', genre = '" + genre + "' WHERE email = '" + email + "'", function(err, result){
+		if(err){
+			res.write(JSON.stringify({message: "OK"}));
+		} else {
+			res.write(JSON.stringify({message: "KO"}));
+		}	
+		res.end();	
+	});
+
+	*/
+
+	
+});
+
 var server = app.listen(process.env.PORT);
 
 
