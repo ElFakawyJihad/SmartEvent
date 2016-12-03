@@ -55,10 +55,10 @@ app.post('/inscription', function (req, res) {
 	client.connect();
 	var query = client.query("INSERT INTO user (email, password) VALUES ('" + email + "', '" + password + "')", function(err, result) {
         	if (err) {
-                    	res.write(JSON.stringify({message: "KO"}));
-                } else {
-			res.write(JSON.stringify({message: "OK"}));
-                }
+                res.write(JSON.stringify({message: "KO"}));
+            } else {
+				res.write(JSON.stringify({message: "OK"}));
+            }
 		res.end();
 	});
 	
@@ -78,9 +78,9 @@ app.post('/fill_informations', function (req, res) {
 	client.connect();
 	var query = client.query("UPDATE user SET prenom = '" + prenom + "', nom = '" + nom + "', naissance = '" + naissance + "', genre = '" + genre + "' WHERE email = '" + email + "'", function(err, result){
 		if(err){
-			res.write(JSON.stringify({message: "OK"}));
-		} else {
 			res.write(JSON.stringify({message: "KO"}));
+		} else {
+			res.write(JSON.stringify({message: "OK"}));
 		}	
 		res.end();	
 	});
@@ -106,9 +106,10 @@ app.post('/create_event', function (req, res) {
 
 	var query = client.query("INSERT into lieu(name, longitude, latitude) VALUES('" + localisation + "', '" + longitude + "', '" + latitude + "')'", function(err, result){
 		if(err){
-			res.write(JSON.stringify({message: "OK"}));
+			res.write(JSON.stringify({message: "OK", error:err}));
 		} else {
 			console.log("result : " + result);
+
 		}	
 		res.end();	
 	});
