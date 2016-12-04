@@ -136,6 +136,26 @@ app.post('/create_event', function (req, res) {
 	
 });
 
+app.get('/test', function(req, res){
+
+
+
+	var results = [];
+
+	var client = new pg.Client(connectionString);
+	client.connect();
+
+	var query = client.query("INSERT into lieu(name, longitude, latitude) VALUES('toto', 50.2, 0.5)", function(err, result){
+		if(err){
+			res.write(JSON.stringify({error : err}));
+		} else {
+			res.write(JSON.stringify({message: "OK"}));
+		}	
+		res.end();	
+	});
+
+});
+
 
 
 
