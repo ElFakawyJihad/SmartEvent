@@ -120,6 +120,8 @@ app.post('/create_event', function (req, res) {
 		res.end();	
 	});
 
+	client.end();
+
 /*
 	var query = client.query("INSERT into event(titre, description, date_debut, nb_places, ) VALUES('" + prenom + "', nom = '" + nom + "', naissance = '" + naissance + "', genre = '" + genre + "' WHERE email = '" + email + "'", function(err, result){
 		if(err){
@@ -146,7 +148,9 @@ app.get('/reinit_server', function (req, res) {
 
 	helper_function.create_tables(client);
 
-	//helper_function.create_data(client);
+	helper_function.create_data(client);
+
+	client.end();
 
 });
 
