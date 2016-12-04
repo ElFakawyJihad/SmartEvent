@@ -6,8 +6,14 @@ var config = require("config");
 
 var pg = require("pg");
 
-var connectionString = 'postgres://kzxtapoogcvmno:PsjtCpudOYotO0C90iG_3BG_ik@ec2-54-75-230-117.eu-west-1.compute.amazonaws.com:5432/dfi19v1ancp7qq';
+var connectionString;
+if(process.env.PORT != undefined){
+	connectionString = 'postgres://kzxtapoogcvmno:PsjtCpudOYotO0C90iG_3BG_ik@ec2-54-75-230-117.eu-west-1.compute.amazonaws.com:5432/dfi19v1ancp7qq';
+} else {
+ 	connectionString = 'postgres://postgres:06072012@localhost:5432/smartevents';
+}
 
+var helper_function = require("./helper_function")
 
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
@@ -130,22 +136,17 @@ app.post('/create_event', function (req, res) {
 });
 
 
-function create_data(){
-
-	
-}
-
-
 
 app.get('/reinit_server', function (req, res) {
+	console.log("connection : " + connectionString);
+	
 	var client = new pg.Client(connectionString);
+
 	client.connect();
 
-	client.query("DELETE FROM user");
-	
-	client.query("INSERT INTO user VALUES('dureyantonin@gmail.com', 'Antonin', 'Durey', '', '1995-01-17', 'azerty01', '0', '0')");
+	helper_function.create_tables(client);
 
-	client.query("INSERT INTO user VALUES('test', 'test', 'test', '', '', 'test', '0', '0')");
+	//helper_function.create_data(client);
 
 });
 
@@ -154,7 +155,7 @@ app.get('/reinit_server', function (req, res) {
 
 
 
-var server = app.listen(process.env.PORT);
+var server = app.listen(process.env.PORT || 8080);
 
 
 

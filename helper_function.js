@@ -1,38 +1,30 @@
-var pg = require("pg");
-var connectionString = "postgres://kzxtapoogcvmno:PsjtCpudOYotO0C90iG_3BG_ik@ec2-54-75-230-117.eu-west-1.compute.amazonaws.com:5432/dfi19v1ancp7qq";
+module.exports = {
+  create_data: function(client){
 
-
-var client = new pg.Client(connectionString);
-
-console.log("tata");
-client.connect(function (err, client, done) {  
-	console.log("done : " + done);
-  	if (err) {
-    		return console.error('error fetching client from pool', err)
-  	}
-});
-
-console.log("toto");
-create_tables();
-
-console.log("tutu");
-create_data();
-
-console.log("tete");
-client.end();
-
-
-
-
-function create_data(){
+  	client.query("INSERT INTO coming VALUES('Invité')");
+  	client.query("INSERT INTO coming VALUES('Viendra')");
+  	client.query("INSERT INTO coming VALUES('Peut-être')");
+  	client.query("INSERT INTO coming VALUES('Ne viendra pas')");
 
 	client.query("INSERT INTO user VALUES('dureyantonin@gmail.com', 'Antonin', 'Durey', '', '1995-01-17', 'azerty01', '0', '0')");
 
 	client.query("INSERT INTO user VALUES('test', 'test', 'test', '', '', 'test', '0', '0')");
 
-}
+},
+  create_tables: function(client){
 
-function create_tables(){
+  	// rang table
+	client.query("DROP TABLE IF EXISTS coming", function (err, client, done) {  
+  		if (err) {
+    			return console.error('error fetching client from pool', err)
+  		}
+	});
+
+	client.query("CREATE TABLE coming (id INT PRIMARY KEY, name VARCHAR(20))", function (err, client, done) {  
+  		if (err) {
+    			return console.error('error fetching client from pool', err)
+		}  	
+	});
 
 	// rang table
 	client.query("DROP TABLE IF EXISTS rang", function (err, client, done) {  
@@ -40,6 +32,7 @@ function create_tables(){
     			return console.error('error fetching client from pool', err)
   		}
 	});
+
 	client.query("CREATE TABLE rang (id INT PRIMARY KEY, name VARCHAR(12), description VARCHAR(45))", function (err, client, done) {  
   		if (err) {
     			return console.error('error fetching client from pool', err)
@@ -83,15 +76,15 @@ function create_tables(){
 	});
 
 	// user table
-	client.query("DROP TABLE IF EXISTS user", function (err, client, done) {  
+	client.query("DROP TABLE IF EXISTS users", function (err, client, done) {  
   		if (err) {
-    			return console.error('error fetching client from pool', err)
+    			return console.error('error dropping user table', err)
 		}  	
 	});
 	// TODO rajouter le genre
-	client.query("CREATE TABLE user (email VARCHAR(40) PRIMARY KEY, first_name VARCHAR(20), last_name VARCHAR(20), photo VARCHAR(45), naissance DATE, password VARCHAR(20), grade_id INT, rang_id INT)", function (err, client, done) {  
+	client.query("CREATE TABLE users (email VARCHAR(40) PRIMARY KEY, first_name VARCHAR(20), last_name VARCHAR(20), photo VARCHAR(45), naissance DATE, password VARCHAR(20), grade_id INT, rang_id INT)", function (err, client, done) {  
   		if (err) {
-    			return console.error('error fetching client from pool', err)
+    			return console.error('error creating user table', err)
 		}  	
 	});
 
@@ -113,7 +106,7 @@ function create_tables(){
     			return console.error('error fetching client from pool', err)
 		}  	
 	});
-	client.query("CREATE TABLE user_join_event (id INT PRIMARY KEY, user_email VARCHAR(45), event_id INT, time_clock TIMESTAMP, type ENUM('Peut-être', 'Invité', 'Viendra', 'Ne viendra pas'))", function (err, client, done) {  
+	client.query("CREATE TABLE user_join_event (id INT PRIMARY KEY, user_email VARCHAR(45), event_id INT, time_clock TIMESTAMP, coming_id INT)", function (err, client, done) {  
   		if (err) {
     			return console.error('error fetching client from pool', err)
 		}  	
@@ -154,6 +147,11 @@ function create_tables(){
     			return console.error('error fetching client from pool', err)
 		}  	
 	});
-}
+},
+create_database: function(){
+
+	client.query("CREATE DATABASE smartevents");
 
 
+},
+};
