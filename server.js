@@ -33,7 +33,7 @@ app.post('/connection', function (req, res) {
 
 	var client = new pg.Client(connectionString);
 	client.connect();
-	var query = client.query("SELECT * FROM userApp where email = '" + email + "' AND password = '" + password + "'");
+	var query = client.query("SELECT * FROM users where email = '" + email + "' AND password = '" + password + "'");
 
 	query.on('row', function(row){
 		results.push(row);	
@@ -61,9 +61,9 @@ app.post('/inscription', function (req, res) {
 
 	var client = new pg.Client(connectionString);
 	client.connect();
-	var query = client.query("INSERT INTO user (email, password) VALUES ('" + email + "', '" + password + "')", function(err, result) {
+	var query = client.query("INSERT INTO users (email, password) VALUES ('" + email + "', '" + password + "')", function(err, result) {
         	if (err) {
-                res.write(JSON.stringify({message: "KO"}));
+                res.write(JSON.stringify({message: "KO", error:err}));
             } else {
 				res.write(JSON.stringify({message: "OK"}));
             }
@@ -140,18 +140,20 @@ app.get('/test', function(req, res){
 
 
 
+	var email = req.body.email;
+	var password = req.body.password;
+
 	var results = [];
 
 	var client = new pg.Client(connectionString);
 	client.connect();
-
-	var query = client.query("INSERT into lieu(name, longitude, latitude) VALUES('toto', 50.2, 0.5)", function(err, result){
-		if(err){
-			res.write(JSON.stringify({error : err}));
-		} else {
-			res.write(JSON.stringify({message: "OK"}));
-		}	
-		res.end();	
+	var query = client.query("INSERT INTO users (email, password) VALUES ('toto', 'tata')", function(err, result) {
+        	if (err) {
+                res.write(JSON.stringify({message: "KO", error:err}));
+            } else {
+				res.write(JSON.stringify({message: "OK"}));
+            }
+		res.end();
 	});
 
 });
