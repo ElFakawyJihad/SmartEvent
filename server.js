@@ -121,8 +121,6 @@ app.post('/create_event', function (req, res) {
 		res.end();	
 	});
 
-	client.end();
-
 /*
 	var query = client.query("INSERT into event(titre, description, date_debut, nb_places, ) VALUES('" + prenom + "', nom = '" + nom + "', naissance = '" + naissance + "', genre = '" + genre + "' WHERE email = '" + email + "'", function(err, result){
 		if(err){
