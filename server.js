@@ -4,7 +4,9 @@ var fs = require("fs");
 var bodyParser = require('body-parser');
 var config = require("config");
 
+
 var pg = require("pg");
+var pgp = require('pg-promise')();
 
 var connectionString;
 if(process.env.PORT != undefined){
@@ -112,10 +114,9 @@ app.post('/create_event', function (req, res) {
 
 	var query = client.query("INSERT into lieu(name, longitude, latitude) VALUES('" + localisation + "', '" + longitude + "', '" + latitude + "')'", function(err, result){
 		if(err){
-			res.write(JSON.stringify({message: "OK", error:err}));
+			res.write(JSON.stringify({message: "KO", error:err}));
 		} else {
-			console.log("result : " + result);
-
+			res.write(JSON.stringify({message: "OK"}));
 		}	
 		res.end();	
 	});
@@ -139,18 +140,15 @@ app.post('/create_event', function (req, res) {
 
 
 
-app.get('/reinit_server', function (req, res) {
-	console.log("connection : " + connectionString);
+
+
+app.get('/reinit_data', function (req, res) {
 	
-	var client = new pg.Client(connectionString);
+	helper_function.create_tables(connectionString);
+	helper_function.create_data(connectionString);
 
-	client.connect();
-
-	helper_function.create_tables(client);
-
-	helper_function.create_data(client);
-
-	client.end();
+	res.write("OK");
+	res.end();
 
 });
 
