@@ -154,7 +154,7 @@ app.post('/create_event', function (req, res) {
 	var client = new pg.Client(connectionString);
 	client.connect();
 
-	var query = client.query("INSERT into lieu(name, longitude, latitude) VALUES('" + localisation + ", " + longitude + ", " + latitude + ")", function(err1, result1){
+	var query = client.query("INSERT into lieu(name, longitude, latitude) VALUES('" + localisation + "', " + longitude + ", " + latitude + ")", function(err1, result1){
     	if (err1) {
             res.write(JSON.stringify({message: "KO", error:err1}));
             res.end();
