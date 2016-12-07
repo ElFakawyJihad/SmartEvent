@@ -136,7 +136,7 @@ app.post('/create_event', function (req, res) {
 	client.connect();
 
 	
-	var query = client.query("INSERT into event(titre, description, date_debut, nb_places, lieu_name, longitude, latitude, lieu_id) VALUES('" + titre + "', '" + description + "', '" + date + "', " + capacity + ", " + localisation + ", " + longitude + ", " + latitude + ")", function(err, result){
+	var query = client.query("INSERT into event(titre, description, date_debut, nb_places, lieu_name, longitude, latitude, lieu_id) VALUES('" + titre + "', '" + description + "', '" + date + "', " + capacity + ", '" + localisation + "', " + longitude + ", " + latitude + ")", function(err, result){
 
 		if(err){
 			res.write(JSON.stringify({message: "KO", error:err}));
@@ -149,46 +149,27 @@ app.post('/create_event', function (req, res) {
 
 });
 
-app.get('/test', function(req, res){
+app.post('/test', function(req, res){
 
 
 
-	var email = req.body.email;
-	var password = req.body.password;
+	var query_text = req.query.query_text;
 
 	var results = [];
 
+
 	var client = new pg.Client(connectionString);
 	client.connect();
-	var query = client.query("INSERT into lieu(name, longitude, latitude) VALUES('Au M5, '50.2', '0.3280')", function(err1, result1){
-    	if (err1) {
-            res.write(JSON.stringify({message: "KO", error:err1}));
-            res.end();
 
-        } else {
+	
+	var query = client.query(query_text, function(err, result){
 
-        	var querybis = client.query("SELECT id FROM lieu WHERE name = 'Au M5' AND longitude  = 50.2 AND latitude = 0.3280", function(err2, result2){
-        		if(err2){
-        			res.write(JSON.stringify({message: "KO", error:err2}));
-        			res.end();
-
-        		} else {
-        			var queryter = client.query("INSERT into event(titre, description, date_debut, nb_places, lieu_id) VALUES('This is a nice event', 'This is the description', '2016-12-07', '5', " + result2 + ")", function(err3, result3){
-        				// , titre VARCHAR(45), description VARCHAR(255), photo VARCHAR(45), date_debut TIMESTAMP, date_fin TIMESTAMP, nb_places INT, lieu_id INT, organisateur_id INT
-
-        				if(err3){
-        					res.write(JSON.stringify({message: "KO", error:err3}));
-        				} else {
-        					res.write(JSON.stringify({message: "OK"}));
-
-        				}
-        				res.end();
-
-        			});
-
-        		}
-        	});
-        }
+		if(err){
+			res.write(JSON.stringify({message: "KO", error:err}));
+		} else {
+			res.write(JSON.stringify({message: "OK"}));
+		}
+		res.end();
 	});
 
 });
