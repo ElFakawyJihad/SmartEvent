@@ -107,7 +107,7 @@ app.post('/join_event', function (req, res) {
 	var client = new pg.Client(connectionString);
 	client.connect();
 
-	var query = client.query("INSERT into user_join_event(user_email, event_id) VALUES('" + email + "', '" + event_id + ")", function(err, result){
+	var query = client.query("INSERT into user_join_event(user_email, event_id) VALUES('" + email + "', '" + event_id + "')", function(err, result){
 
 		if(err){
 			res.write(JSON.stringify({message: "KO", error:err}));
@@ -136,7 +136,7 @@ app.post('/create_event', function (req, res) {
 	client.connect();
 
 	
-	var query = client.query("INSERT into event(titre, description, date_debut, nb_places, lieu_name, longitude, latitude, lieu_id) VALUES('" + titre + "', '" + description + "', '" + date + "', " + capacity + ", '" + localisation + "', " + longitude + ", " + latitude + ")", function(err, result){
+	var query = client.query("INSERT into event(titre, description, date_debut, nb_places, lieu_name, longitude, latitude) VALUES('" + titre + "', '" + description + "', '" + date + "', '" + capacity + "', '" + localisation + "', '" + longitude + "', '" + latitude + "')", function(err, result){
 
 		if(err){
 			res.write(JSON.stringify({message: "KO", error:err}));
