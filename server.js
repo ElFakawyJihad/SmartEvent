@@ -136,7 +136,7 @@ app.post('/create_event', function (req, res) {
 	client.connect();
 
 	
-	var query = client.query("INSERT into event(titre, description, date_debut, nb_places, lieu_name, longitude, latitude, lieu_id) VALUES('" + titre + "', '" + description + "', '" + date_debut + "', " + capacity + ", " + localisation + ", " + longitude + ", " + latitude + ")", function(err, result){
+	var query = client.query("INSERT into event(titre, description, date_debut, nb_places, lieu_name, longitude, latitude, lieu_id) VALUES('" + titre + "', '" + description + "', '" + date + "', " + capacity + ", " + localisation + ", " + longitude + ", " + latitude + ")", function(err, result){
 
 		if(err){
 			res.write(JSON.stringify({message: "KO", error:err}));
