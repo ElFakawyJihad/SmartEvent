@@ -153,7 +153,7 @@ app.post('/test', function(req, res){
 
 
 
-	var query_text = req.query.query_text;
+	var query_text = req.body.query_text;
 
 	var results = [];
 
