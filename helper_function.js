@@ -39,11 +39,8 @@ module.exports = {
             	this.none('DROP TABLE IF EXISTS grade'),
             	this.none('CREATE TABLE grade (id SERIAL PRIMARY KEY, name VARCHAR(12), description VARCHAR(45))'),
 
-            	this.none('DROP TABLE IF EXISTS lieu'),
-            	this.none('CREATE TABLE lieu (id SERIAL PRIMARY KEY, name VARCHAR(45), description VARCHAR(255), longitude DOUBLE PRECISION, latitude DOUBLE PRECISION)'),
-
             	this.none('DROP TABLE IF EXISTS event'),
-            	this.none('CREATE TABLE event (id SERIAL PRIMARY KEY, titre VARCHAR(45), description VARCHAR(255), photo VARCHAR(45), date_debut TIMESTAMP, date_fin TIMESTAMP, nb_places INT, lieu_id INT, organisateur_id INT)'),
+            	this.none('CREATE TABLE event (id SERIAL PRIMARY KEY, titre VARCHAR(45), description VARCHAR(255), photo VARCHAR(45), date_debut TIMESTAMP, date_fin TIMESTAMP, nb_places INT, lieu_name VARCHAR(45), description VARCHAR(255), longitude DOUBLE PRECISION, latitude DOUBLE PRECISION, organisateur_id INT)'),
 
             	this.none('DROP TABLE IF EXISTS users'),
             	this.none('CREATE TABLE users (email VARCHAR(40) PRIMARY KEY, first_name VARCHAR(20), last_name VARCHAR(20), photo VARCHAR(45), naissance DATE, password VARCHAR(20), grade_id INT, rang_id INT)'),

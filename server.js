@@ -96,45 +96,26 @@ app.post('/fill_informations', function (req, res) {
 	
 });
 
-app.get('/get_lieux', function (req, res) {
-	var results = [];
-
-	var client = new pg.Client(connectionString);
-	client.connect();
-
-	var query = client.query("SELECT * FROM lieu", function(err, result){
-    	if (err) {
-            res.write(JSON.stringify({message: "KO", error:err}));
-        } else {
-        	res.write(JSON.stringify({message:"OK", result:result.rows}));
-        }
-
-        res.end();
-    });
-
-});
-
-app.get('/get_lieu', function (req, res) {
-	console.log("tata");
-
-	var id = req.query.id;
-
-	var client = new pg.Client(connectionString);
-	client.connect();
-
-	var query = client.query("SELECT * FROM lieu WHERE id = " + id, function(err, result){
-    	if (err) {
-            res.write(JSON.stringify({message: "KO", error:err}));
-        } else {
-        	res.write(JSON.stringify({message:"OK", result:result.rows}));
-        }
-        
-        res.end();
-    });
-
-});
 
 app.get('/get_event', function (req, res) {
+
+});
+
+app.post('/join_event', function (req, res) {
+	var email = req.body.email;
+	var event_id = req.body.event_id;
+	var client = new pg.Client(connectionString);
+	client.connect();
+
+	var query = client.query("INSERT into user_join_event(user_email, event_id) VALUES('" + email + "', '" + event_id + ")", function(err, result){
+
+		if(err){
+			res.write(JSON.stringify({message: "KO", error:err}));
+		} else {
+			res.write(JSON.stringify({message: "OK"}));
+		}
+		res.end();
+	});
 
 });
 
@@ -154,33 +135,17 @@ app.post('/create_event', function (req, res) {
 	var client = new pg.Client(connectionString);
 	client.connect();
 
-	var query = client.query("INSERT into lieu(name, longitude, latitude) VALUES('" + localisation + "', " + longitude + ", " + latitude + ")", function(err1, result1){
-    	if (err1) {
-            res.write(JSON.stringify({message: "KO", error:err1}));
-            res.end();
+	
+	var query = client.query("INSERT into event(titre, description, date_debut, nb_places, lieu_name, longitude, latitude, lieu_id) VALUES('" + titre + "', '" + description + "', '" + date_debut + "', " + capacity + ", " + localisation + ", " + longitude + ", " + latitude + ")", function(err, result){
 
-        } else {
-
-        	var querybis = client.query("SELECT id FROM lieu WHERE name = '" + localisation + "' AND longitude = " + longitude + " AND latitude = " + latitude, function(err2, result2){
-        		if(err2){
-        			res.write(JSON.stringify({message: "KO", error:err2}));
-        			res.end();
-
-        		} else {
-        			var queryter = client.query("INSERT into event(titre, description, date_debut, nb_places, lieu_id) VALUES('" + titre + "', '" + description + "', '" + date_debut + "', " + capacity + ", " + result2.rows[0] + ")", function(err3, result3){
-        				// , titre VARCHAR(45), description VARCHAR(255), photo VARCHAR(45), date_debut TIMESTAMP, date_fin TIMESTAMP, nb_places INT, lieu_id INT, organisateur_id INT
-
-        				if(err3){
-        					res.write(JSON.stringify({message: "KO", error:err3}));
-        				} else {
-        					res.write(JSON.stringify({message: "OK"}));
-        				}
-        				res.end();
-        			});
-        		}
-        	});
-        }
+		if(err){
+			res.write(JSON.stringify({message: "KO", error:err}));
+		} else {
+			res.write(JSON.stringify({message: "OK"}));
+		}
+		res.end();
 	});
+        		
 
 });
 
