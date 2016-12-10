@@ -17,25 +17,25 @@ module.exports = {
             	this.none('CREATE TABLE grade (id SERIAL PRIMARY KEY, name VARCHAR(12), description VARCHAR(45))'),
 
             	this.none('DROP TABLE IF EXISTS event'),
-            	this.none('CREATE TABLE event (id SERIAL PRIMARY KEY, titre VARCHAR(45), description VARCHAR(255), photo VARCHAR(45), date_debut TIMESTAMP, date_fin TIMESTAMP, nb_places INT, lieu_name VARCHAR(45), description VARCHAR(255), longitude DOUBLE PRECISION, latitude DOUBLE PRECISION, organisateur_id INT)'),
+            	this.none('CREATE TABLE event (id SERIAL PRIMARY KEY, titre VARCHAR(45), description VARCHAR(255), date_debut TIMESTAMP, date_fin TIMESTAMP, nb_places INTEGER, lieu_name VARCHAR(45), description VARCHAR(255), longitude DOUBLE PRECISION, latitude DOUBLE PRECISION, organisateur_id INTEGER)'),
 
             	this.none('DROP TABLE IF EXISTS users'),
-            	this.none('CREATE TABLE users (email VARCHAR(40) PRIMARY KEY, first_name VARCHAR(20), last_name VARCHAR(20), photo VARCHAR(45), naissance DATE, password VARCHAR(20), grade_id INT, rang_id INT)'),
+            	this.none('CREATE TABLE users (email VARCHAR(40) PRIMARY KEY, first_name VARCHAR(20), last_name VARCHAR(20), photo VARCHAR(45), naissance DATE, password VARCHAR(20), grade_id INTEGER, rang_id INTEGER)'),
 
             	this.none('DROP TABLE IF EXISTS friend'),
             	this.none('CREATE TABLE friend (id SERIAL PRIMARY KEY, user1_email VARCHAR(45), user2_email VARCHAR(45))'),
 
             	this.none('DROP TABLE IF EXISTS user_join_event'),
-            	this.none('CREATE TABLE user_join_event (id SERIAL PRIMARY KEY, user_email VARCHAR(45), event_id INT, time_clock TIMESTAMP, coming_id INT)'),
+            	this.none('CREATE TABLE user_join_event (id SERIAL PRIMARY KEY, user_email VARCHAR(45), event_id INTEGER, time_clock TIMESTAMP, coming_id INTEGER)'),
 
             	this.none('DROP TABLE IF EXISTS interest'),
-            	this.none('CREATE TABLE interest (id SERIAL PRIMARY KEY, name VARCHAR(20), description VARCHAR(50), category_of INT)'),
+            	this.none('CREATE TABLE interest (id SERIAL PRIMARY KEY, name VARCHAR(20), description VARCHAR(50), category_of INTEGER)'),
 
             	this.none('DROP TABLE IF EXISTS user_has_interest'),
-            	this.none('CREATE TABLE user_has_interest (id SERIAL PRIMARY KEY, user_email VARCHAR(40), interest_id INT)'),
+            	this.none('CREATE TABLE user_has_interest (id SERIAL PRIMARY KEY, user_email VARCHAR(40), interest_id INTEGER)'),
 
             	this.none('DROP TABLE IF EXISTS event_has_interest'),
-            	this.none('CREATE TABLE event_has_interest (id SERIAL PRIMARY KEY, event_id INT, interest_id INT)'),
+            	this.none('CREATE TABLE event_has_interest (id SERIAL PRIMARY KEY, event_id INT, interest_id INTEGER)'),
 
 				this.none("INSERT INTO coming VALUES(1, 'Invité'), (2,'Viendra'), (3, 'Peut-être'), (4, 'Ne viendra pas')"),
 
