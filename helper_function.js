@@ -42,7 +42,7 @@ module.exports = {
             	this.none("INSERT INTO users VALUES('dureyantonin@gmail.com', 'Antonin', 'Durey', '', '1995-01-17', 'azerty01', '0', '0'), ('test', 'test', 'test', '', '1970-01-01', 'test', '0', '0')"),
 
 
-            	this.none("CREATE FUNCTION fnCalcDistanceKM(@lat1 FLOAT, @lat2 FLOAT, @lon1 FLOAT, @lon2 FLOAT) RETURNS FLOAT AS BEGIN  RETURN ACOS(SIN(PI()*@lat1/180.0)*SIN(PI()*@lat2/180.0)+COS(PI()*@lat1/180.0)*COS(PI()*@lat2/180.0)*COS(PI()*@lon2/180.0-PI()*@lon1/180.0))*6371 END"),
+            	this.none("CREATE FUNCTION fnCalcDistanceKM(lat1 DOUBLE PRECISION, lat2 DOUBLE PRECISION, lon1 DOUBLE PRECISION, lon2 DOUBLE PRECISION) RETURNS DOUBLE PRECISION AS $$ BEGIN RETURN (ACOS(SIN(PI()*lat1/180.0)*SIN(PI()*lat2/180.0)+COS(PI()*lat1/180.0)*COS(PI()*lat2/180.0)*COS(PI()*lon2/180.0-PI()*lon1/180.0))*6371); END $$ LANGUAGE plpgsql;"),
         	]);
     	})
     	.then(function () {
