@@ -97,7 +97,20 @@ app.post('/fill_informations', function (req, res) {
 });
 
 
-app.get('/get_event', function (req, res) {
+app.get('/get_events', function (req, res) {
+	var client = new pg.Client(connectionString);
+	client.connect();
+
+	
+	var query = client.query("SELECT * FROM event)", function(err, result){
+
+		if(err){
+			res.write(JSON.stringify({message: "KO", error:err}));
+		} else {
+			res.write(JSON.stringify({message: "OK", result:result}));
+		}
+		res.end();
+	});
 
 });
 
