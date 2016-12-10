@@ -107,7 +107,7 @@ app.get('/get_events', function (req, res) {
 		if(err){
 			res.write(JSON.stringify({message: "KO", error:err}));
 		} else {
-			res.write(JSON.stringify({message: "OK", result:result}));
+			res.write(JSON.stringify({message: "OK", result:result.rows}));
 		}
 		res.end();
 	});
@@ -120,7 +120,7 @@ app.post('/join_event', function (req, res) {
 	var client = new pg.Client(connectionString);
 	client.connect();
 
-	var query = client.query("INSERT into user_join_event(user_email, event_id) VALUES('" + email + "', '" + event_id + "')", function(err, result){
+	var query = client.query("INSERT into user_join_event(user_email, event_id, coming_id) VALUES('" + email + "', '" + event_id + "', 2)", function(err, result){
 
 		if(err){
 			res.write(JSON.stringify({message: "KO", error:err}));
@@ -131,6 +131,42 @@ app.post('/join_event', function (req, res) {
 	});
 
 });
+
+app.get('/get_users_going_to_event', function (req, res) {
+	var event_id = req.param('event_id');
+	var client = new pg.Client(connectionString);
+	client.connect();
+
+	var query = client.query("SELECT * from users WHERE email IN (SELECT user_email FROM user_join_event WHERE event_id = " + event_id + " and coming_id = 2)", function(err, result){
+
+		if(err){
+			res.write(JSON.stringify({message: "KO", error:err}));
+		} else {
+			res.write(JSON.stringify({message: "OK", result:result.rows}));
+		}
+		res.end();
+	});
+
+});
+
+app.get('/get_event_near', function(req, res){
+	var longitude = req.param('longitude');
+	var latitude = req.param('latitude');
+	var client = new pg.Client(connectionString);
+	client.connect();
+
+	var query = client.query("SELECT * from event WHERE fnCalcDistanceKM(" + latitude + ", latitude, " + longitude + ", longitude) < 2", function(err, result){
+
+		if(err){
+			res.write(JSON.stringify({message: "KO", error:err}));
+		} else {
+			res.write(JSON.stringify({message: "OK", result:result.rows}));
+		}
+		res.end();
+	});
+
+});
+
 
 app.post('/create_event', function (req, res) {
 

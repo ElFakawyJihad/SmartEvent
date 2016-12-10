@@ -41,6 +41,8 @@ module.exports = {
 
             	this.none("INSERT INTO users VALUES('dureyantonin@gmail.com', 'Antonin', 'Durey', '', '1995-01-17', 'azerty01', '0', '0'), ('test', 'test', 'test', '', '1970-01-01', 'test', '0', '0')"),
 
+
+            	this.none("CREATE FUNCTION fnCalcDistanceKM(@lat1 FLOAT, @lat2 FLOAT, @lon1 FLOAT, @lon2 FLOAT) RETURNS FLOAT AS BEGIN  RETURN ACOS(SIN(PI()*@lat1/180.0)*SIN(PI()*@lat2/180.0)+COS(PI()*@lat1/180.0)*COS(PI()*@lat2/180.0)*COS(PI()*@lon2/180.0-PI()*@lon1/180.0))*6371 END"),
         	]);
     	})
     	.then(function () {
@@ -54,4 +56,21 @@ module.exports = {
         	res.end();
     	});
 	},
+	//Conversion des degrés en radian
+	convertRad(input){
+	        return (Math.PI * input)/180;
+	},
+	 
+	distance(lat_a_degre, lon_a_degre, lat_b_degre, lon_b_degre){
+	     
+	    R = 6378000 //Rayon de la terre en mètre
+	 
+	    lat_a = convertRad(lat_a_degre);
+	    lon_a = convertRad(lon_a_degre);
+	    lat_b = convertRad(lat_b_degre);
+	    lon_b = convertRad(lon_b_degre);
+	     
+	    d = R * (Math.PI/2 - Math.asin( Math.sin(lat_b) * Math.sin(lat_a) + Math.cos(lon_b - lon_a) * Math.cos(lat_b) * Math.cos(lat_a)))
+	    return d;
+	}
 };
