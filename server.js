@@ -149,6 +149,36 @@ app.post('/create_event', function (req, res) {
 
 });
 
+app.get('/form', function(req, res){
+
+	res.write("<form action='/test_form' method='POST'><textarea name='request'></textarea><input type='submit' name='Valider'/></form>")
+	res.end();
+	
+
+});
+
+
+app.post('/test_form', function(req, res){
+
+	var client = new pg.Client(connectionString);
+
+
+	var request = req.body.request;
+
+	console.log("request : " + request);
+	var query = client.query(request, function(err, result){
+
+		if(err){
+			res.write(JSON.stringify({message: "KO", error:err}));
+		} else {
+			res.write(JSON.stringify({message: "OK"}));
+		}
+		res.end();
+	});
+
+
+});
+
 app.post('/test', function(req, res){
 
 
