@@ -17,7 +17,7 @@ module.exports = {
             	this.none('CREATE TABLE grade (id SERIAL PRIMARY KEY, name VARCHAR(12), description VARCHAR(45))'),
 
             	this.none('DROP TABLE IF EXISTS event'),
-            	this.none('CREATE TABLE event (id SERIAL PRIMARY KEY, titre VARCHAR(45), description VARCHAR(255), date_debut TIMESTAMP, date_fin TIMESTAMP, nb_places INTEGER, lieu_name VARCHAR(45), description VARCHAR(255), longitude DOUBLE PRECISION, latitude DOUBLE PRECISION, organisateur_id INTEGER)'),
+            	this.none('CREATE TABLE event (id SERIAL PRIMARY KEY, titre VARCHAR(45), description VARCHAR(255), date_debut TIMESTAMP, date_fin TIMESTAMP, nb_places INTEGER, lieu_name VARCHAR(45), longitude DOUBLE PRECISION, latitude DOUBLE PRECISION, organisateur_id INTEGER)'),
 
             	this.none('DROP TABLE IF EXISTS users'),
             	this.none('CREATE TABLE users (email VARCHAR(40) PRIMARY KEY, first_name VARCHAR(20), last_name VARCHAR(20), photo VARCHAR(45), naissance DATE, password VARCHAR(20), grade_id INTEGER, rang_id INTEGER)'),
@@ -51,7 +51,7 @@ module.exports = {
     	.catch(function (error) {
     		console.log("Creating table error");
         	res.write(JSON.stringify({message:"KO",err:error})); // print error;
-    		return 1;
+        	res.end();
     	});
 	},
 };
