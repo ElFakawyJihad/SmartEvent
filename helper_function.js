@@ -1,30 +1,7 @@
 var pgp = require('pg-promise')();
 
 module.exports = {
-  	create_data: function(connectionString){
-
-  		var db = pgp(connectionString);
-
-		db.tx(function () {
-        	return this.batch([
-            	this.none("INSERT INTO coming VALUES(1, 'Invité'), (2,'Viendra'), (3, 'Peut-être'), (4, 'Ne viendra pas')"),
-
-            	this.none("INSERT INTO users VALUES('dureyantonin@gmail.com', 'Antonin', 'Durey', '', '1995-01-17', 'azerty01', '0', '0'), ('test', 'test', 'test', '', '1970-01-01', 'test', '0', '0')"),
-
-            	
-        	]);
-    	})
-    	.then(function () {
-    		console.log("Insertions done");
-        	return 0;
-    	})
-    	.catch(function (error) {
-    		console.log("Insertions error");
-        	console.log(error); // print error;
-    		return 1;
-    	});
-	},
-	 create_tables: function(connectionString){
+  	create_data: function(connectionString, res){
 
 	 	var db = pgp(connectionString);
 
@@ -59,15 +36,21 @@ module.exports = {
 
             	this.none('DROP TABLE IF EXISTS event_has_interest'),
             	this.none('CREATE TABLE event_has_interest (id SERIAL PRIMARY KEY, event_id INT, interest_id INT)'),
+
+		this.none("INSERT INTO coming VALUES(1, 'Invité'), (2,'Viendra'), (3, 'Peut-être'), (4, 'Ne viendra pas')"),
+
+            	this.none("INSERT INTO users VALUES('dureyantonin@gmail.com', 'Antonin', 'Durey', '', '1995-01-17', 'azerty01', '0', '0'), ('test', 'test', 'test', '', '1970-01-01', 'test', '0', '0')"),
+
         	]);
     	})
     	.then(function () {
     		console.log("Creating table OK");
-        	return 0;
-    	})
+        	res.write(JSON.stringify({message:"OK"}));
+		res.end();	    	
+	})
     	.catch(function (error) {
     		console.log("Creating table error");
-        	console.log(error); // print error;
+        	res.write(JSON.stringify({message:"KO",err:error})); // print error;
     		return 1;
     	});
 	},
