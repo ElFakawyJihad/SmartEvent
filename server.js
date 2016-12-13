@@ -155,7 +155,7 @@ app.get('/get_event_near', function(req, res){
 	var client = new pg.Client(connectionString);
 	client.connect();
 
-	var query = client.query("SELECT * from event WHERE fnCalcDistanceKM(" + latitude + ", latitude, " + longitude + ", longitude) < 2", function(err, result){
+	var query = client.query("SELECT * from event WHERE fnCalcDistanceKM(" + latitude + ", latitude, " + longitude + ", longitude) < 10", function(err, result){
 
 		if(err){
 			res.write(JSON.stringify({message: "KO", error:err}));
