@@ -38,7 +38,7 @@ module.exports = {
             	this.none('CREATE TABLE event_has_interest (id SERIAL PRIMARY KEY, event_id INT, interest_id INTEGER)'),
 
                 this.none('DROP TABLE IF EXISTS message_into_event'),
-                this.none('CREATE TABLE message_into_event (id INT PRIMARY KEY, event_id INT, text VARCHAR(255), user_email VARCHAR(45), date TIMESTAMP)'),
+                this.none('CREATE TABLE message_into_event (id SERIAL PRIMARY KEY, event_id INT, text VARCHAR(255), user_email VARCHAR(45), date TIMESTAMP)'),
 
 				this.none("INSERT INTO coming VALUES(1, 'Invité'), (2,'Viendra'), (3, 'Peut-être'), (4, 'Ne viendra pas')"),
 
