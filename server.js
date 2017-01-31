@@ -231,7 +231,7 @@ app.post('/event_add_chat_message', function (req, res) {
 	client.connect();
 
 	
-	var query = client.query("INSERT into event(event_id, text, user_email, date) VALUES('" + eventId + "', '" + text + "', '" + user_email + "', '" + date + "')", function(err, result){
+	var query = client.query("INSERT into message_into_event(event_id, text, user_email, date) VALUES('" + eventId + "', '" + text + "', '" + user_email + "', '" + date + "')", function(err, result){
 
 		if(err){
 			res.write(JSON.stringify({message: "KO", error:err}));
