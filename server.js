@@ -305,7 +305,6 @@ app.post('/test', function(req, res){
 
 app.get('/reinit_data', function (req, res) {
 	
-	helper_function.create_tables(connectionString, res);
 	helper_function.create_data(connectionString, res);
 
 });
