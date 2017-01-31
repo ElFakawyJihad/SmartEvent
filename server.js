@@ -116,14 +116,14 @@ app.get('/get_events', function (req, res) {
 
 app.get('/get_event', function (req, res) {
 
-	var id = req.body.id;
+	var id = str(req.body.id);
 
 	var results = [];
 	var client = new pg.Client(connectionString);
 	client.connect();
 
 	
-	var query = client.query("SELECT * FROM event WHERE id = '" + id + "'", function(err, result){
+	var query = client.query("SELECT * FROM event WHERE id = " + id, function(err, result){
 
 		if(err){
 			res.write(JSON.stringify({message: "KO", error:err}));
@@ -252,7 +252,7 @@ app.post('/get_messages_event', function (req, res) {
 	client.connect();
 
 	
-	var query = client.query("SELECT * FROM message_into_event WHERE eventId = '" + eventId + "' ORDER BY date", function(err, result){
+	var query = client.query("SELECT * FROM message_into_event WHERE event_id = '" + eventId + "' ORDER BY date", function(err, result){
 
 		if(err){
 			res.write(JSON.stringify({message: "KO", error:err}));
