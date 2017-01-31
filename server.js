@@ -114,6 +114,27 @@ app.get('/get_events', function (req, res) {
 
 });
 
+app.get('/get_event', function (req, res) {
+
+	var id = req.body.id;
+
+	var results = [];
+	var client = new pg.Client(connectionString);
+	client.connect();
+
+	
+	var query = client.query("SELECT * FROM event where id =" + id, function(err, result){
+
+		if(err){
+			res.write(JSON.stringify({message: "KO", error:err}));
+		} else {
+			res.write(JSON.stringify({message: "OK", result:result.rows}));
+		}
+		res.end();
+	});
+
+});
+
 app.post('/join_event', function (req, res) {
 	var email = req.body.email;
 	var event_id = req.body.event_id;
@@ -198,24 +219,19 @@ app.post('/create_event', function (req, res) {
 
 });
 
-app.get('/form', function(req, res){
+app.post('/event_add_chat_message', function (req, res) {
 
-	res.write("<form action='/test_form' method='POST'><textarea name='request'></textarea><input type='submit' name='Valider'/></form>")
-	res.end();
+	var eventId = req.body.eventId;
+	var text = req.body.text;
+	var user_email = req.body.user_email;
+	var date = req.body.date;
 	
 
-});
-
-
-app.post('/test_form', function(req, res){
-
 	var client = new pg.Client(connectionString);
+	client.connect();
 
-
-	var request = req.body.request;
-
-	console.log("request : " + request);
-	var query = client.query(request, function(err, result){
+	
+	var query = client.query("INSERT into event(event_id, text, user_email, date) VALUES('" + eventId + "', '" + text + "', '" + user_email + "', '" + date + "')", function(err, result){
 
 		if(err){
 			res.write(JSON.stringify({message: "KO", error:err}));
@@ -224,9 +240,39 @@ app.post('/test_form', function(req, res){
 		}
 		res.end();
 	});
-
+        		
 
 });
+
+app.post('/get_messages_event', function (req, res) {
+
+	var eventId = req.body.eventId;	
+
+	var client = new pg.Client(connectionString);
+	client.connect();
+
+	
+	var query = client.query("SELECT * FROM message_into_event WHERE eventId = '" + eventId + "' ORDERBY date", function(err, result){
+
+		if(err){
+			res.write(JSON.stringify({message: "KO", error:err}));
+		} else {
+			res.write(JSON.stringify({message: "OK", result: result.rows}));
+		}
+		res.end();
+	});
+        		
+
+});
+
+app.get('/form', function(req, res){
+
+	res.write("<form action='/test_form' method='POST'><textarea name='request'></textarea><input type='submit' name='Valider'/></form>")
+	res.end();
+	
+
+});
+
 
 app.post('/test', function(req, res){
 

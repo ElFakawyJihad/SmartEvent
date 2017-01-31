@@ -82,6 +82,18 @@ function create_tables(){
 		}  	
 	});
 
+	// message into event table
+	client.query("DROP TABLE IF EXISTS message_into_event", function (err, client, done) {  
+  		if (err) {
+    			return console.error('error fetching client from pool', err)
+		}  	
+	});
+	client.query("CREATE TABLE message_into_event (id INT PRIMARY KEY, event_id INT, text VARCHAR(255), user_email VARCHAR(45), date TIMESTAMP)", function (err, client, done) {  
+  		if (err) {
+    			return console.error('error fetching client from pool', err)
+		}  	
+	});
+
 	// user table
 	client.query("DROP TABLE IF EXISTS user", function (err, client, done) {  
   		if (err) {
