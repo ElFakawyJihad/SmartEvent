@@ -123,7 +123,7 @@ app.get('/get_event', function (req, res) {
 	client.connect();
 
 	
-	var query = client.query("SELECT * FROM event where id =" + id, function(err, result){
+	var query = client.query("SELECT * FROM event where id = " + id, function(err, result){
 
 		if(err){
 			res.write(JSON.stringify({message: "KO", error:err}));
