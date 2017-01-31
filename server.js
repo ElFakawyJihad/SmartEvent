@@ -123,7 +123,7 @@ app.get('/get_event', function (req, res) {
 	client.connect();
 
 	
-	var query = client.query("SELECT * FROM event where id = " + id, function(err, result){
+	var query = client.query("SELECT * FROM event WHERE id = '" + id + "'", function(err, result){
 
 		if(err){
 			res.write(JSON.stringify({message: "KO", error:err}));
@@ -252,7 +252,7 @@ app.post('/get_messages_event', function (req, res) {
 	client.connect();
 
 	
-	var query = client.query("SELECT * FROM message_into_event WHERE eventId = '" + eventId + "' ORDERBY date", function(err, result){
+	var query = client.query("SELECT * FROM message_into_event WHERE eventId = '" + eventId + "' ORDER BY date", function(err, result){
 
 		if(err){
 			res.write(JSON.stringify({message: "KO", error:err}));
